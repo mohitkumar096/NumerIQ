@@ -59,5 +59,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("net.objecthunter:exp4j:0.4.8")
+    implementation("androidx.compose.foundation:foundation:1.5.1") // Use latest version
+    implementation("androidx.compose.foundation:foundation:1.5.4") // Latest Compose Foundation
+
+
 
 }

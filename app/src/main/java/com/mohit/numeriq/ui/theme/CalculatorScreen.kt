@@ -32,15 +32,15 @@ fun CalculatorScreen(modifier: Modifier) {
     val themeColor = if (isSystemInDarkTheme()) Color.Black else Color.White
     val transformedColor = textColor.copy(alpha = 0.7f)
 
-
     val expressionScrollState = rememberScrollState()
     val resultScrollState = rememberScrollState()
 
+    // Auto-scroll when expression or result updates
     LaunchedEffect(expression) {
-        expressionScrollState.scrollTo(expressionScrollState.maxValue) // Scroll to end
+        expressionScrollState.animateScrollTo(expressionScrollState.maxValue)
     }
     LaunchedEffect(result) {
-        resultScrollState.scrollTo(resultScrollState.maxValue) // Scroll to end
+        resultScrollState.animateScrollTo(resultScrollState.maxValue)
     }
 
     Column(
@@ -138,6 +138,13 @@ fun CalculatorScreen(modifier: Modifier) {
                                             result = "0"
                                         }
                                         "⌫" -> expression = expression.dropLast(1)
+                                        "." -> {
+                                            if (expression.isEmpty() || expression.last() in listOf('+', '-', '*', '/', 'x', '%')) {
+                                                expression += "0." // Prevent cases like "+."
+                                            } else if (!expression.contains(".")) {
+                                                expression += "."
+                                            }
+                                        }
                                         else -> expression += label
                                     }
                                 },
